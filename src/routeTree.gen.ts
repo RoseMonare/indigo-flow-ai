@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MeetingNotesRouteImport } from './routes/meeting-notes'
 import { Route as SmartEmailRouteImport } from './routes/smart-email'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeetingNotesRoute = MeetingNotesRouteImport.update({
+  id: '/meeting-notes',
+  path: '/meeting-notes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SmartEmailRoute = SmartEmailRouteImport.update({
@@ -25,27 +31,31 @@ const SmartEmailRoute = SmartEmailRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/meeting-notes': typeof MeetingNotesRoute
   '/smart-email': typeof SmartEmailRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/meeting-notes': typeof MeetingNotesRoute
   '/smart-email': typeof SmartEmailRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/meeting-notes': typeof MeetingNotesRoute
   '/smart-email': typeof SmartEmailRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/smart-email'
+  fullPaths: '/' | '/meeting-notes' | '/smart-email'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/smart-email'
-  id: '__root__' | '/' | '/smart-email'
+  to: '/' | '/meeting-notes' | '/smart-email'
+  id: '__root__' | '/' | '/meeting-notes' | '/smart-email'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MeetingNotesRoute: typeof MeetingNotesRoute
   SmartEmailRoute: typeof SmartEmailRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meeting-notes': {
+      id: '/meeting-notes'
+      path: '/meeting-notes'
+      fullPath: '/meeting-notes'
+      preLoaderRoute: typeof MeetingNotesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/smart-email': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MeetingNotesRoute: MeetingNotesRoute,
   SmartEmailRoute: SmartEmailRoute,
 }
 export const routeTree = rootRouteImport
