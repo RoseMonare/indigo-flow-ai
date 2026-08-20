@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiChatRouteImport } from './routes/ai-chat'
 import { Route as MeetingNotesRouteImport } from './routes/meeting-notes'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SmartEmailRouteImport } from './routes/smart-email'
 import { Route as TaskPlannerRouteImport } from './routes/task-planner'
 
@@ -30,6 +31,11 @@ const MeetingNotesRoute = MeetingNotesRouteImport.update({
   path: '/meeting-notes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SmartEmailRoute = SmartEmailRouteImport.update({
   id: '/smart-email',
   path: '/smart-email',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-chat': typeof AiChatRoute
   '/meeting-notes': typeof MeetingNotesRoute
+  '/settings': typeof SettingsRoute
   '/smart-email': typeof SmartEmailRoute
   '/task-planner': typeof TaskPlannerRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-chat': typeof AiChatRoute
   '/meeting-notes': typeof MeetingNotesRoute
+  '/settings': typeof SettingsRoute
   '/smart-email': typeof SmartEmailRoute
   '/task-planner': typeof TaskPlannerRoute
 }
@@ -60,20 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ai-chat': typeof AiChatRoute
   '/meeting-notes': typeof MeetingNotesRoute
+  '/settings': typeof SettingsRoute
   '/smart-email': typeof SmartEmailRoute
   '/task-planner': typeof TaskPlannerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/ai-chat' | '/meeting-notes' | '/smart-email' | '/task-planner'
+    | '/'
+    | '/ai-chat'
+    | '/meeting-notes'
+    | '/settings'
+    | '/smart-email'
+    | '/task-planner'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai-chat' | '/meeting-notes' | '/smart-email' | '/task-planner'
+  to:
+    | '/'
+    | '/ai-chat'
+    | '/meeting-notes'
+    | '/settings'
+    | '/smart-email'
+    | '/task-planner'
   id:
     | '__root__'
     | '/'
     | '/ai-chat'
     | '/meeting-notes'
+    | '/settings'
     | '/smart-email'
     | '/task-planner'
   fileRoutesById: FileRoutesById
@@ -82,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiChatRoute: typeof AiChatRoute
   MeetingNotesRoute: typeof MeetingNotesRoute
+  SettingsRoute: typeof SettingsRoute
   SmartEmailRoute: typeof SmartEmailRoute
   TaskPlannerRoute: typeof TaskPlannerRoute
 }
@@ -109,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MeetingNotesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/smart-email': {
       id: '/smart-email'
       path: '/smart-email'
@@ -130,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiChatRoute: AiChatRoute,
   MeetingNotesRoute: MeetingNotesRoute,
+  SettingsRoute: SettingsRoute,
   SmartEmailRoute: SmartEmailRoute,
   TaskPlannerRoute: TaskPlannerRoute,
 }
